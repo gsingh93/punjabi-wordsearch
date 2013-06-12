@@ -6,7 +6,6 @@ class Grid {
   
   static const String letters = "abcdefghijklmnopqrstuvwxyz";
 
-  // Convention is grid[row][column]
   List<List<String>> grid;
   
   Random r = new Random();
@@ -23,14 +22,14 @@ class Grid {
   }
   
   String get(int row, int col) {
-    assert(row < dim && row > 0);
-    assert(col < dim && col > 0);
+    assert(row < dim && row >= 0);
+    assert(col < dim && col >= 0);
     return grid[row][col];
   }
   
   void set(int row, int col, String letter) {
-    assert(row < dim && row > 0);
-    assert(col < dim && col > 0);
+    assert(row < dim && row >= 0);
+    assert(col < dim && col >= 0);
     assert(letter.length == 1);
     grid[row][col] = letter;
   }
