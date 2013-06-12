@@ -1,0 +1,7 @@
+name: punjabi_wordsearch
+version: 0.0.1
+description: A Punjabi wordsearch generator
+author: Gulshan Singh <gulshan@umich.edu>
+homepage: http://gulshansingh.com
+dependencies:
+  browser: any
