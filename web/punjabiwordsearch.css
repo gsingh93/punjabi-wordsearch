@@ -7,6 +7,25 @@ body {
   margin: 15px;
 }
 
+#content {
+  text-align: center;
+}
+
+#content-inner {
+  margin: 0 auto;
+}
+
+#wordsearch {
+  float: left;
+  margin: 0 auto;
+}
+
+#form {
+  text-align: left;
+  float: left;
+  padding: 20px;
+}
+
 .letter {
   height: 25px;
   width: 25px;

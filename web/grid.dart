@@ -1,6 +1,7 @@
 import 'dart:html';
 import 'dart:math';
 import 'wordplacer.dart';
+import 'direction.dart';
 
 class Grid {
   
@@ -12,13 +13,13 @@ class Grid {
   WordPlacer wp;
   int dim;
   
-  Grid(this.dim) {
+  Grid(this.dim, directions) {
     grid = new List<List<String>>(dim);
     for (int i = 0; i < dim; i++) {
       grid[i] = new List<String>(dim);
     }
     
-    wp = new WordPlacer(this);
+    wp = new WordPlacer(this, directions);
   }
   
   String get(int row, int col) {

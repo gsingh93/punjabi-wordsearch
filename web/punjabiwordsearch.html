@@ -7,14 +7,46 @@
     <link rel="stylesheet" href="punjabiwordsearch.css">
   </head>
   <body>
-    <h1>Punjabi Wordsearch</h1>
-    
-    <div id="wordsearch">
+    <div id="content">
+      <h1>Punjabi Wordsearch</h1>
+      <div id="content-inner">
+        <div id="wordsearch">
+        </div>
+  
+        <div id="form">  
+          Language:<br>
+          <select name="language">
+            <option value="english">English</option>
+            <option value="punjabi">Punjabi</option>
+          </select>
+          <br>
+          <br>
+          Words can be placed in these directions:<br>
+          <input type="checkbox" name="directions" value="n" checked="checked">North<br>
+          <input type="checkbox" name="directions" value="w" checked="checked">South<br>
+          <input type="checkbox" name="directions" value="e" checked="checked">East<br>
+          <input type="checkbox" name="directions" value="s" checked="checked">West<br>
+          <input type="checkbox" name="directions" value="ne" checked="checked">North East<br>
+          <input type="checkbox" name="directions" value="nw" checked="checked">North West<br>
+          <input type="checkbox" name="directions" value="se" checked="checked">South East<br>
+          <input type="checkbox" name="directions" value="sw" checked="checked">South West<br>
+          <br>
+          
+          Should words be selected automatically, or would you like to input words manually?:<br>
+          <input type="radio" name="input" value="automatic" checked="checked">Automatic<br>
+          <input type="radio" name="input" value="manual">Manual<br>
+          <br>
+          <input type="textarea" name="words">
+          <br>
+          The number of rows and columns to make the grid:<br>
+          <input type="number" name="dimensions" min="5" max="20" value="10">
+          <br><br>
+          <button id="generate">Generate</button>
+        </div>
+        <div style="clear:both"></div>
+      </div>
     </div>
-
-    <input type="number" name="dimensions" min="5" max="20" value="10">
-    <button id="generate">Generate</button>
-
+    
     <script type="application/dart" src="punjabiwordsearch.dart"></script>
     <script src="packages/browser/dart.js"></script>
   </body>
