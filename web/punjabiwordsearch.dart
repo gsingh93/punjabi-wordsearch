@@ -7,12 +7,42 @@ const int BUTTON_SIZE = 25;
 const int MIN_DIM = 5;
 const int MAX_DIM = 20;
 
-void main() {
+void main() {  
   int width = getDimensions() * BUTTON_SIZE;
   width += 600;
   query('#content-inner')..style.width = width.toString() + "px";
+  
+  initListeners();
+  
   generate();
   query('#generate')..onClick.listen((e) => generate());
+}
+
+void initListeners() {
+  query('#automatic-radio')..onChange.listen((e) => radioToggleVisibility(e));
+  query('#manual-radio')..onChange.listen((e) => radioToggleVisibility(e));
+}
+
+void radioToggleVisibility(event) {
+  toggleVisibility("#input-words");
+  toggleVisibility("#num-words");
+}
+
+void toggleVisibility(String element, [bool block = true]) {
+  var el = query(element);
+  String display = el.style.display;
+  
+  if (display == "none") {
+    if (block) {
+      display = "block";
+    } else {
+      display = "inline";
+    }
+  } else {
+    display = "none";
+  }
+  
+  el.style.display = display;
 }
 
 void generate() {
@@ -34,8 +64,12 @@ void generate() {
 }
 
 List<Direction> getDirections() {
-  return <Direction>[Direction.N, Direction.S, Direction.E, Direction.W,
-                     Direction.NW, Direction.NE, Direction.SW, Direction.SE];
+  List<Direction> dirs = new List<Direction>();
+  ElementList<CheckboxInputElement> dirElements = queryAll('input[name="directions"]');
+  for (CheckboxInputElement dir in dirElements) {
+    dirs.add(Direction.getDir(dir.value));
+  }
+  return dirs;
 }
 
 int getDimensions() {
