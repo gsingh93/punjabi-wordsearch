@@ -1,3 +1,5 @@
+library grid;
+
 import 'dart:html';
 import 'dart:math';
 import 'wordplacer.dart';

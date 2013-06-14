@@ -15,7 +15,7 @@
   
         <div id="form">  
           Language:<br>
-          <select name="language">
+          <select id="language" name="language">
             <option value="english">English</option>
             <option value="punjabi">Punjabi</option>
           </select>
@@ -35,8 +35,8 @@
           Should words be selected automatically, or would you like to input words manually?:<br>
           <input id="automatic-radio" type="radio" name="input" value="automatic" checked="checked" bind-value='inputTypeRadio'>Automatic<br>
           <input id="manual-radio" type="radio" name="input" value="manual" bind-value='inputTypeRadio'>Manual<br>
-          <div id="num-words">Number of words:<input type="number" name="num-words" min="5" max="20" value="10"></div>
-          <div id="input-words" style="display:none">Words:<br><textarea name="input-words" rows="4" cols="50"></textarea></div>
+          <div id="num-words">Number of words: <input type="number" name="num-words" min="5" max="20" value="10"></div>
+          <div id="input-words" style="display:none">Words (one per line):<br><textarea name="input-words" rows="4" cols="50"></textarea></div>
           <br><br>
           The number of rows and columns to make the grid:<br>
           <input type="number" name="dimensions" min="5" max="20" value="10">

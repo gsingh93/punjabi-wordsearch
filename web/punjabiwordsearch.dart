@@ -1,6 +1,7 @@
 import 'dart:html';
 import 'grid.dart';
 import 'direction.dart';
+import 'configmanager.dart';
 
 const int BUTTON_SIZE = 25;
 
@@ -15,12 +16,12 @@ void main() {
   initListeners();
   
   generate();
-  query('#generate')..onClick.listen((e) => generate());
 }
 
 void initListeners() {
   query('#automatic-radio')..onChange.listen((e) => radioToggleVisibility(e));
   query('#manual-radio')..onChange.listen((e) => radioToggleVisibility(e));
+  query('#generate')..onClick.listen((e) => generate());
 }
 
 void radioToggleVisibility(event) {
@@ -58,14 +59,14 @@ void generate() {
     grid.display();
   } on FormatException {
     print("Dimension not an integer");
-  } catch(e) {
+  } catch(e) { // TODO
     print("Invalid integer " + e.toString());
   }
 }
 
 List<Direction> getDirections() {
   List<Direction> dirs = new List<Direction>();
-  ElementList<CheckboxInputElement> dirElements = queryAll('input[name="directions"]');
+  List<CheckboxInputElement> dirElements = ConfigManager.getDirections();
   for (CheckboxInputElement dir in dirElements) {
     dirs.add(Direction.getDir(dir.value));
   }
@@ -73,16 +74,19 @@ List<Direction> getDirections() {
 }
 
 int getDimensions() {
-  InputElement input = query("input[name='dimensions']");
-  int val = int.parse(input.value);
-  if (val >= MIN_DIM && val <= MAX_DIM) {
-    return val;
+  int dim = ConfigManager.getDimensions();
+  if (dim >= MIN_DIM && dim <= MAX_DIM) {
+    return dim;
   }
-  throw val;
+  throw dim;
 }
 
 List<String> getWords() {
-  return <String>['hello', 'world', 'this', 'is', 'a', 'puzzle'];
+  if (ConfigManager.isInputAutomatic()) {
+    return <String>['hello', 'world', 'this', 'is', 'a', 'puzzle'];
+  } else {
+    return ConfigManager.getWords(); // TODO: Validate lengths    
+  }
 }
 
 Grid createGrid(int dim, List<String> words, List<Direction> directions) {
