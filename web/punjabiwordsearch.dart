@@ -19,14 +19,19 @@ void main() {
 }
 
 void initListeners() {
-  query('#automatic-radio')..onChange.listen((e) => radioToggleVisibility(e));
-  query('#manual-radio')..onChange.listen((e) => radioToggleVisibility(e));
+  query('#automatic-radio')..onChange.listen((e) => radioChanged(e));
+  query('#manual-radio')..onChange.listen((e) => radioChanged(e));
   query('#generate')..onClick.listen((e) => generate());
+  query('#language')..onChange.listen((e) => changeLang());
 }
 
-void radioToggleVisibility(event) {
+void radioChanged(event) {
   toggleVisibility("#input-words");
   toggleVisibility("#num-words");
+  
+  if (ConfigManager.isInputManual()) {
+    // TODO Display Punjabi keyboard
+  }
 }
 
 void toggleVisibility(String element, [bool block = true]) {
@@ -46,6 +51,27 @@ void toggleVisibility(String element, [bool block = true]) {
   el.style.display = display;
 }
 
+void changeLang() {
+  if (ConfigManager.getLanguage() == "punjabi") {
+    if (ConfigManager.isInputManual()) {
+      // TODO Display Punjabi keyboard
+    }
+    query('#input-words').classes.add('punjabi');
+  } else {
+    query('#input-words').classes.remove('punjabi');
+  }
+}
+
+void setLanguage() {
+  String lang = ConfigManager.getLanguage();
+  DivElement wordSearch = query('#wordsearch');
+  if (lang == "punjabi") {
+    wordSearch.classes.add('punjabi');
+  } else {
+    wordSearch.classes.remove('punjabi');
+  }
+}
+
 void generate() {
   List<String> words = getWords();
   try {
@@ -56,12 +82,24 @@ void generate() {
       return;
     }
     Grid grid = createGrid(dim, words, dirs);
+    setLanguage();
     grid.display();
   } on FormatException {
-    print("Dimension not an integer");
-  } catch(e) { // TODO
-    print("Invalid integer " + e.toString());
+    String errorMessage = "The dimension not an integer";
+    print(errorMessage);
+    window.alert(errorMessage);
+  } catch(e) {
+    String errorMessage = "An error occurred: " + e.toString();
+    print(errorMessage);
+    window.alert(errorMessage);
   }
+}
+
+Grid createGrid(int dim, List<String> words, List<Direction> directions) {
+  Grid grid = new Grid(dim, directions);
+  grid.placeWords(words);
+  grid.fillInBlanks();
+  return grid;
 }
 
 List<Direction> getDirections() {
@@ -74,24 +112,35 @@ List<Direction> getDirections() {
 }
 
 int getDimensions() {
-  int dim = ConfigManager.getDimensions();
-  if (dim >= MIN_DIM && dim <= MAX_DIM) {
-    return dim;
+  try {
+    int dim = ConfigManager.getDimensions();
+    if (dim >= MIN_DIM && dim <= MAX_DIM) {
+      return dim;
+    } else {
+      throw new Exception(dim.toString() + " is an invalid dimension");
+    }
+  } on FormatException {
+    // TODO Get invalid dim
+    throw new Exception("Invalid dimension ");
   }
-  throw dim;
 }
 
 List<String> getWords() {
   if (ConfigManager.isInputAutomatic()) {
     return <String>['hello', 'world', 'this', 'is', 'a', 'puzzle'];
   } else {
-    return ConfigManager.getWords(); // TODO: Validate lengths    
+    int dim = ConfigManager.getDimensions();
+    List<String> words = ConfigManager.getWords();
+    print(words.length);
+    for (String word in words) {
+      print(word);
+      if (word.length > dim) {
+        String errorMessage = "The word " + word + " is " + word.length.toString() 
+            + "letters long, but the largest word that can fit on the grid is only "
+            + dim.toString() + " letters long";
+        throw new Exception(errorMessage);
+      }
+    }
+    return words;
   }
-}
-
-Grid createGrid(int dim, List<String> words, List<Direction> directions) {
-  Grid grid = new Grid(dim, directions);
-  grid.placeWords(words);
-  grid.fillInBlanks();
-  return grid;
 }

@@ -1,3 +1,8 @@
+/*@font-face {
+    font-family: 'GurbaniWebThick';
+    src: url('gurbaniwebthick.ttf');
+}*/
+
 body {
   background-color: #F8F8F8;
   font-family: 'Open Sans', sans-serif;
@@ -29,4 +34,8 @@ body {
 .letter {
   height: 25px;
   width: 25px;
+}
+
+.punjabi * {
+  font-family: GurbaniWebThick;
 }
