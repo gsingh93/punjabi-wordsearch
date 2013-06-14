@@ -13,18 +13,32 @@ class ConfigManager {
   }
   
   static bool isInputAutomatic() {
-    CheckboxInputElement cb = query('#automatic-radio');
-    return cb.checked;
+    RadioButtonInputElement rb = query('#automatic-radio');
+    return rb.checked;
   }
   
   static bool isInputManual() {
-    CheckboxInputElement cb = query('#manual-radio');
-    return cb.checked;
+    RadioButtonInputElement rb = query('#manual-radio');
+    return rb.checked;
   }
   
   static int getDimensions() {
     InputElement input = query("input[name='dimensions']");
-    return int.parse(input.value);
+    try {
+      return int.parse(input.value);
+    } on FormatException {
+      throw new Exception("The dimension you entered is not a valid integer"); 
+    }
+  }
+  
+  static int getNumWords() {
+    assert(isInputAutomatic());
+    InputElement input = query('#num-words input[name="num-words"]');
+    try {
+      return int.parse(input.value);
+    } on FormatException {
+      throw new Exception("The number you entered is not a valid integer"); 
+    }
   }
   
   static List<String> getWords() {

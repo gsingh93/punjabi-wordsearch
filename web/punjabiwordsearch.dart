@@ -73,7 +73,6 @@ void setLanguage() {
 }
 
 void generate() {
-  List<String> words = getWords();
   try {
     int dim = getDimensions();
     List<Direction> dirs = getDirections();
@@ -81,16 +80,14 @@ void generate() {
       print("Not enough directions checked");
       return;
     }
+    List<String> words = getWords();
     Grid grid = createGrid(dim, words, dirs);
     setLanguage();
     grid.display();
-  } on FormatException {
-    String errorMessage = "The dimension not an integer";
-    print(errorMessage);
-    window.alert(errorMessage);
-  } catch(e) {
+  } catch(e, stackTrace) {
     String errorMessage = "An error occurred: " + e.toString();
     print(errorMessage);
+    print(stackTrace);
     window.alert(errorMessage);
   }
 }
@@ -112,28 +109,28 @@ List<Direction> getDirections() {
 }
 
 int getDimensions() {
-  try {
-    int dim = ConfigManager.getDimensions();
-    if (dim >= MIN_DIM && dim <= MAX_DIM) {
-      return dim;
-    } else {
-      throw new Exception(dim.toString() + " is an invalid dimension");
-    }
-  } on FormatException {
-    // TODO Get invalid dim
-    throw new Exception("Invalid dimension ");
+  int dim = ConfigManager.getDimensions();
+  if (dim >= MIN_DIM && dim <= MAX_DIM) {
+    return dim;
+  } else {
+    throw new Exception(dim.toString() + " is an invalid dimension. "
+        + "The dimension must be between " + MIN_DIM.toString() + " and "
+        + MAX_DIM.toString() + ".");
   }
 }
 
 List<String> getWords() {
   if (ConfigManager.isInputAutomatic()) {
+    int numWords = ConfigManager.getNumWords();
+    if (numWords < 1) {
+      throw new Exception("You must have at least one word");
+    }
+    // TODO
     return <String>['hello', 'world', 'this', 'is', 'a', 'puzzle'];
   } else {
     int dim = ConfigManager.getDimensions();
     List<String> words = ConfigManager.getWords();
-    print(words.length);
     for (String word in words) {
-      print(word);
       if (word.length > dim) {
         String errorMessage = "The word " + word + " is " + word.length.toString() 
             + "letters long, but the largest word that can fit on the grid is only "
