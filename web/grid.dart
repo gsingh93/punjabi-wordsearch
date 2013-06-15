@@ -18,8 +18,7 @@ class Grid {
       _grid[i] = new List<String>(dim);
     }
     
-    _wp = new WordPlacer(ConfigManager.getLanguage(), this,
-        ConfigManager.getDirections());
+    _wp = new WordPlacer(getLanguage(), this, getDirections());
   }
   
   String get(int row, int col) {

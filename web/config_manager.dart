@@ -1,55 +1,53 @@
-library configmanager;
+library config_manager;
 
 import 'dart:html';
 import 'direction.dart';
 
-class ConfigManager {
-  static String getLanguage() {
-    SelectElement dropdown = query('#language');
-    return dropdown.value;
+String getLanguage() {
+  SelectElement dropdown = query('#language');
+  return dropdown.value;
+}
+
+List<Direction> getDirections() {
+  List<Direction> dirs = new List<Direction>();
+  List<CheckboxInputElement> dirElements = queryAll('input[name="directions"]');
+  for (CheckboxInputElement dir in dirElements) {
+    dirs.add(Direction.getDir(dir.value));
   }
   
-  static List<Direction> getDirections() {
-    List<Direction> dirs = new List<Direction>();
-    List<CheckboxInputElement> dirElements = queryAll('input[name="directions"]');
-    for (CheckboxInputElement dir in dirElements) {
-      dirs.add(Direction.getDir(dir.value));
-    }
-    
-    return dirs;
+  return dirs;
+}
+
+bool isInputAutomatic() {
+  RadioButtonInputElement rb = query('#automatic-radio');
+  return rb.checked;
+}
+
+bool isInputManual() {
+  RadioButtonInputElement rb = query('#manual-radio');
+  return rb.checked;
+}
+
+int getDimensions() {
+  InputElement input = query("input[name='dimensions']");
+  try {
+    return int.parse(input.value);
+  } on FormatException {
+    throw new Exception("The dimension you entered is not a valid integer"); 
   }
-  
-  static bool isInputAutomatic() {
-    RadioButtonInputElement rb = query('#automatic-radio');
-    return rb.checked;
+}
+
+int getNumWords() {
+  assert(isInputAutomatic());
+  InputElement input = query('#num-words input[name="num-words"]');
+  try {
+    return int.parse(input.value);
+  } on FormatException {
+    throw new Exception("The number you entered is not a valid integer"); 
   }
-  
-  static bool isInputManual() {
-    RadioButtonInputElement rb = query('#manual-radio');
-    return rb.checked;
-  }
-  
-  static int getDimensions() {
-    InputElement input = query("input[name='dimensions']");
-    try {
-      return int.parse(input.value);
-    } on FormatException {
-      throw new Exception("The dimension you entered is not a valid integer"); 
-    }
-  }
-  
-  static int getNumWords() {
-    assert(isInputAutomatic());
-    InputElement input = query('#num-words input[name="num-words"]');
-    try {
-      return int.parse(input.value);
-    } on FormatException {
-      throw new Exception("The number you entered is not a valid integer"); 
-    }
-  }
-  
-  static List<String> getWords() {
-    TextAreaElement textArea = query("#input-words textarea[name='input-words']");
-    return textArea.value.split("\\n");
-  }
+}
+
+List<String> getWords() {
+  TextAreaElement textArea = query("#input-words textarea[name='input-words']");
+  return textArea.value.split("\\n");
 }

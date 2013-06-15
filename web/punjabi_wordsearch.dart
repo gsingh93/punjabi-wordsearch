@@ -1,7 +1,7 @@
 import 'dart:html';
 import 'grid.dart';
 import 'direction.dart';
-import 'config_manager.dart';
+import 'config_manager.dart' as ConfigManager;
 import 'word_placer.dart';
 
 const int BUTTON_SIZE = 25;
