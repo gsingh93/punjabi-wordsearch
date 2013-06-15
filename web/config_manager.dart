@@ -1,6 +1,7 @@
 library configmanager;
 
 import 'dart:html';
+import 'direction.dart';
 
 class ConfigManager {
   static String getLanguage() {
@@ -8,8 +9,14 @@ class ConfigManager {
     return dropdown.value;
   }
   
-  static List<CheckboxInputElement> getDirections() {
-    return queryAll('input[name="directions"]');
+  static List<Direction> getDirections() {
+    List<Direction> dirs = new List<Direction>();
+    List<CheckboxInputElement> dirElements = queryAll('input[name="directions"]');
+    for (CheckboxInputElement dir in dirElements) {
+      dirs.add(Direction.getDir(dir.value));
+    }
+    
+    return dirs;
   }
   
   static bool isInputAutomatic() {

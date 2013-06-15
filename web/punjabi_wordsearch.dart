@@ -1,7 +1,8 @@
 import 'dart:html';
 import 'grid.dart';
 import 'direction.dart';
-import 'configmanager.dart';
+import 'config_manager.dart';
+import 'word_placer.dart';
 
 const int BUTTON_SIZE = 25;
 
@@ -74,14 +75,9 @@ void setLanguage() {
 
 void generate() {
   try {
-    int dim = getDimensions();
-    List<Direction> dirs = getDirections();
-    if (dirs.length < 1) {
-      print("Not enough directions checked");
-      return;
-    }
+    int dim = getDimensions();    
     List<String> words = getWords();
-    Grid grid = createGrid(dim, words, dirs);
+    Grid grid = createGrid(dim, words);
     setLanguage();
     grid.display();
   } catch(e, stackTrace) {
@@ -92,20 +88,11 @@ void generate() {
   }
 }
 
-Grid createGrid(int dim, List<String> words, List<Direction> directions) {
-  Grid grid = new Grid(dim, directions);
+Grid createGrid(int dim, List<String> words) {
+  Grid grid = new Grid(dim);
   grid.placeWords(words);
   grid.fillInBlanks();
   return grid;
-}
-
-List<Direction> getDirections() {
-  List<Direction> dirs = new List<Direction>();
-  List<CheckboxInputElement> dirElements = ConfigManager.getDirections();
-  for (CheckboxInputElement dir in dirElements) {
-    dirs.add(Direction.getDir(dir.value));
-  }
-  return dirs;
 }
 
 int getDimensions() {
@@ -128,16 +115,31 @@ List<String> getWords() {
     // TODO
     return <String>['hello', 'world', 'this', 'is', 'a', 'puzzle'];
   } else {
-    int dim = ConfigManager.getDimensions();
     List<String> words = ConfigManager.getWords();
-    for (String word in words) {
-      if (word.length > dim) {
-        String errorMessage = "The word " + word + " is " + word.length.toString() 
-            + "letters long, but the largest word that can fit on the grid is only "
-            + dim.toString() + " letters long";
-        throw new Exception(errorMessage);
-      }
+    
+    int dim = ConfigManager.getDimensions();
+    words.retainWhere((w) => validateWord(w, dim));
+        
+    if (words.length < 1) {
+      throw new Exception("You must have at least one word");
     }
+
     return words;
   }
+}
+
+bool validateWord(String word, int dim) {
+  if (word.length == 0) {
+    return false;
+  }
+  if (word.length > dim) {
+    String errorMessage = "The word " + word + " is " + word.length.toString() 
+        + " letters long, but the largest word that can fit on the grid is only "
+        + dim.toString() + " letters long";
+    throw new Exception(errorMessage);
+  }
+  
+  // TODO Word should only contain chars from charset
+  
+  return true;
 }
