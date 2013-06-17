@@ -30,7 +30,6 @@ class Grid {
   void set(int row, int col, String letter) {
     assert(row < dim && row >= 0);
     assert(col < dim && col >= 0);
-    assert(letter.length == 1);
     _grid[row][col] = letter;
   }
   

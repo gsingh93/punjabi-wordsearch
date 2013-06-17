@@ -15,7 +15,22 @@ class PunjabiWordPlacer extends WordPlacer {
   }
   
   void putWordInGrid(String word, int row, int col, Direction dir) {
-    
+    int pos = 0;
+    for (int i = 0; i < word.length; i++) {
+      int newRow = row + pos * dir.deltaRow;
+      int newCol = col + pos * dir.deltaCol;
+      String letter = word[i];
+      if (_isLetter(letter)) {
+        if (i != word.length - 1 && _isVowel(word[i + 1]) && word[i + 1] != "i") {
+          grid.set(newRow, newCol, letter + word[++i]);
+        } else {
+          grid.set(newRow, newCol, letter);
+        }
+      } else { // Must be "i"
+        grid.set(newRow, newCol, letter + word[++i]);
+      }
+      pos++;
+    }
   }
   
   String randLetter() {
@@ -41,6 +56,15 @@ class PunjabiWordPlacer extends WordPlacer {
   bool _isLetter(String letter) {
     assert(letter.length == 1);
     if (_LETTERS.contains(letter)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  
+  bool _isVowel(String letter) {
+    assert(letter.length == 1);
+    if (_VOWELS.contains(letter)) {
       return true;
     } else {
       return false;
