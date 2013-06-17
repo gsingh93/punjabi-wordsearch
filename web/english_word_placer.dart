@@ -7,7 +7,7 @@ import 'word_placer.dart';
 
 class EnglishWordPlacer extends WordPlacer {
   
-  static const String letters = "abcdefghijklmnopqrstuvwxyz";
+  static const String _LETTERS = "abcdefghijklmnopqrstuvwxyz";
   
   EnglishWordPlacer(Grid g, List<Direction> d) : super.init(g, d);
   
@@ -24,6 +24,6 @@ class EnglishWordPlacer extends WordPlacer {
   }  
   
   String randLetter() {
-    return letters[r.nextInt(26)];
+    return _LETTERS[r.nextInt(26)];
   }
 }

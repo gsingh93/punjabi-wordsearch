@@ -4,6 +4,7 @@ import 'dart:math';
 import 'grid.dart';
 import 'direction.dart';
 import 'english_word_placer.dart';
+import 'punjabi_word_placer.dart';
 
 abstract class WordPlacer {
     List<Direction> _directions;
@@ -19,6 +20,7 @@ abstract class WordPlacer {
       
       switch(language) {
         case "punjabi":
+          return new PunjabiWordPlacer(grid, dirs);
         case "english":
           return new EnglishWordPlacer(grid, dirs);
         default:
