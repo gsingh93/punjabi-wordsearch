@@ -1,7 +1,7 @@
-/*@font-face {
+@font-face {
     font-family: 'GurbaniWebThick';
     src: url('gurbaniwebthick.ttf');
-}*/
+}
 
 body {
   background-color: #F8F8F8;
@@ -17,11 +17,15 @@ body {
 }
 
 #content-inner {
+  width: 850px;
   margin: 0 auto;
 }
 
 #wordsearch {
   float: left;
+  border: solid 1px;
+  height: 250px;
+  width: 250px;
   margin: 0 auto;
 }
 
@@ -34,6 +38,8 @@ body {
 .letter {
   height: 25px;
   width: 25px;
+  background: white;
+  border: 0px;
 }
 
 .punjabi * {
