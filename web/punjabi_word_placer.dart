@@ -1,3 +1,5 @@
+library punjabi_word_placer;
+
 import 'word_placer.dart';
 import 'grid.dart';
 import 'direction.dart';
