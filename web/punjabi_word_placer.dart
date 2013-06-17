@@ -36,12 +36,48 @@ class PunjabiWordPlacer extends WordPlacer {
   String randLetter() {
     double val = r.nextDouble();
     if (val > _VOWEL_PROBABILITY) {
-      // TODO Return a vowel with a compatible letter
-      return _LETTERS[r.nextInt(_LETTERS.length)]; 
+      String vowel = _VOWELS[r.nextInt(_VOWELS.length)];
+      String letter;
+      do {
+        letter = _LETTERS[r.nextInt(_LETTERS.length)];
+      } while (!_isCompatible(vowel, letter));
+      if (vowel == "i") {
+        return vowel + letter;
+      } else {
+        return letter + vowel;
+      }
     } else {
       return _LETTERS[r.nextInt(_LETTERS.length)]; 
     }
   }
+  
+  // TODO: This is missing rules
+  bool _isCompatible(String vowel, String letter) {
+    assert(vowel.length == 1);
+    assert(letter.length == 1);
+    
+    if (letter == "a") {
+      if (vowel == "u" || vowel == "U") {
+        return true;
+      } else {
+        return false;
+      }
+    } else if (letter == "A") {
+      if (vowel == "w" || vowel == "Y") {
+        return true;
+      } else {
+        return false;
+      }
+    } else if (letter == "e") {
+      if (vowel == "i" || vowel == "I" || vowel == "Y") {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return true;
+    }
+ }
   
   int _countLetters(String word) {
     int numLetters = 0;
