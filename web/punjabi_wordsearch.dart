@@ -80,6 +80,7 @@ void generate() {
     Grid grid = createGrid(dim, words);
     setLanguage();
     grid.display();
+    displayWords(words);
   } catch(e, stackTrace) {
     String errorMessage = "An error occurred: " + e.toString();
     print(errorMessage);
@@ -93,6 +94,16 @@ Grid createGrid(int dim, List<String> words) {
   grid.placeWords(words);
   grid.fillInBlanks();
   return grid;
+}
+
+void displayWords(List<String> words) {
+  OListElement list = query("#words");
+  list.children.clear();
+  for (String word in words) {
+    LIElement elt = new LIElement();
+    elt.text = word;
+    list.append(elt);
+  }
 }
 
 int getDimensions() {

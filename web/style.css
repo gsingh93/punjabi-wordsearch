@@ -21,12 +21,22 @@ body {
   margin: 0 auto;
 }
 
-#wordsearch {
+.left {
   float: left;
+  height: 250px;
+  width: 250px;
+  margin: 0 auto;
+}
+
+#wordsearch {
   border: solid 1px;
   height: 250px;
   width: 250px;
   margin: 0 auto;
+}
+
+#words {
+  text-align: left;
 }
 
 #form {
