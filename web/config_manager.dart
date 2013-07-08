@@ -49,5 +49,5 @@ int getNumWords() {
 
 List<String> getWords() {
   TextAreaElement textArea = query("#input-words textarea[name='input-words']");
-  return textArea.value.split("\\n");
+  return textArea.value.split("\n");
 }
