@@ -1,6 +1,5 @@
 library english_word_placer;
 
-import 'dart:math';
 import 'grid.dart';
 import 'direction.dart';
 import 'word_placer.dart';

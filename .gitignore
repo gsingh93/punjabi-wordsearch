@@ -1,4 +1,4 @@
-pubspec.lock
-packages
-TODO
-deploy
+/packages
+/TODO
+/deploy
+/build

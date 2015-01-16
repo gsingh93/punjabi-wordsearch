@@ -1,9 +1,7 @@
 library grid;
 
 import 'dart:html';
-import 'dart:math';
 import 'word_placer.dart';
-import 'direction.dart';
 import 'config_manager.dart';
 
 class Grid {

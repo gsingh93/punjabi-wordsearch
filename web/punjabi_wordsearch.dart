@@ -1,29 +1,29 @@
 import 'dart:html';
 import 'grid.dart';
-import 'direction.dart';
 import 'config_manager.dart' as ConfigManager;
-import 'word_placer.dart';
 
 const int BUTTON_SIZE = 25;
 
 const int MIN_DIM = 5;
 const int MAX_DIM = 20;
 
-void main() {  
+void main() {
   int width = getDimensions() * BUTTON_SIZE;
   width += 600;
-  query('#content-inner')..style.width = width.toString() + "px";
+  querySelector('#content-inner')..style.width = width.toString() + "px";
   
   initListeners();
   
   generate();
+  
+  generatePDF();
 }
 
 void initListeners() {
-  query('#automatic-radio')..onChange.listen((e) => radioChanged(e));
-  query('#manual-radio')..onChange.listen((e) => radioChanged(e));
-  query('#generate')..onClick.listen((e) => generate());
-  query('#language')..onChange.listen((e) => changeLang());
+  querySelector('#automatic-radio')..onChange.listen((e) => radioChanged(e));
+  querySelector('#manual-radio')..onChange.listen((e) => radioChanged(e));
+  querySelector('#generate')..onClick.listen((e) => generate());
+  querySelector('#language')..onChange.listen((e) => changeLang());
 }
 
 void radioChanged(event) {
@@ -36,7 +36,7 @@ void radioChanged(event) {
 }
 
 void toggleVisibility(String element, [bool block = true]) {
-  var el = query(element);
+  var el = querySelector(element);
   String display = el.style.display;
   
   if (display == "none") {
@@ -57,15 +57,15 @@ void changeLang() {
     if (ConfigManager.isInputManual()) {
       // TODO Display Punjabi keyboard
     }
-    query('#input-words').classes.add('punjabi');
+    querySelector('#input-words').classes.add('punjabi');
   } else {
-    query('#input-words').classes.remove('punjabi');
+    querySelector('#input-words').classes.remove('punjabi');
   }
 }
 
 void setLanguage() {
   String lang = ConfigManager.getLanguage();
-  DivElement wordSearch = query('#wordsearch');
+  DivElement wordSearch = querySelector('#wordsearch');
   if (lang == "punjabi") {
     wordSearch.classes.add('punjabi');
   } else {
@@ -97,7 +97,7 @@ Grid createGrid(int dim, List<String> words) {
 }
 
 void displayWords(List<String> words) {
-  OListElement list = query("#words");
+  OListElement list = querySelector("#words");
   list.children.clear();
   for (String word in words) {
     LIElement elt = new LIElement();
@@ -153,4 +153,14 @@ bool validateWord(String word, int dim) {
   // TODO Word should only contain chars from charset
   
   return true;
+}
+
+void generatePDF() {
+  //var doc = new js.Proxy(js.context.jsPDF);
+//    doc.text(20, 20, "hello world");
+//    doc.save('test.pdf');
+    //doc.fromHTML(js.context.document.getElementById('content'), 15, 15, {
+   //   'width': 170
+    //});
+  //});
 }
