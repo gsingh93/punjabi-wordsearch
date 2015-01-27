@@ -1,6 +1,6 @@
 @font-face {
-    font-family: 'GurbaniWebThick';
-    src: url('gurbaniwebthick.ttf');
+    font-family: 'WebAkharSlim';
+    src: url('webakharslim.ttf');
 }
 
 body {
@@ -54,5 +54,5 @@ body {
 }
 
 .punjabi * {
-  font-family: GurbaniWebThick;
+  font-family: WebAkharSlim;
 }

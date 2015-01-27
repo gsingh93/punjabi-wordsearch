@@ -42,8 +42,10 @@ void changeLang() {
   if (ConfigManager.getLanguage() == "punjabi") {
     // TODO Display Punjabi keyboard
     querySelector('#input-words').classes.add('punjabi');
+    querySelector('#words').classes.add('punjabi');
   } else {
     querySelector('#input-words').classes.remove('punjabi');
+    querySelector('#words').classes.remove('punjabi');
   }
 }
 
