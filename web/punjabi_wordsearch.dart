@@ -13,26 +13,13 @@ void main() {
   querySelector('#content-inner')..style.width = width.toString() + "px";
   
   initListeners();
-  
-  generate();
-  
+    
   generatePDF();
 }
 
 void initListeners() {
-  querySelector('#automatic-radio')..onChange.listen((e) => radioChanged(e));
-  querySelector('#manual-radio')..onChange.listen((e) => radioChanged(e));
   querySelector('#generate')..onClick.listen((e) => generate());
   querySelector('#language')..onChange.listen((e) => changeLang());
-}
-
-void radioChanged(event) {
-  toggleVisibility("#input-words");
-  toggleVisibility("#num-words");
-  
-  if (ConfigManager.isInputManual()) {
-    // TODO Display Punjabi keyboard
-  }
 }
 
 void toggleVisibility(String element, [bool block = true]) {
@@ -54,9 +41,7 @@ void toggleVisibility(String element, [bool block = true]) {
 
 void changeLang() {
   if (ConfigManager.getLanguage() == "punjabi") {
-    if (ConfigManager.isInputManual()) {
-      // TODO Display Punjabi keyboard
-    }
+    // TODO Display Punjabi keyboard
     querySelector('#input-words').classes.add('punjabi');
   } else {
     querySelector('#input-words').classes.remove('punjabi');
@@ -118,14 +103,6 @@ int getDimensions() {
 }
 
 List<String> getWords() {
-  if (ConfigManager.isInputAutomatic()) {
-    int numWords = ConfigManager.getNumWords();
-    if (numWords < 1) {
-      throw new Exception("You must have at least one word");
-    }
-    // TODO
-    return <String>['hello', 'world', 'this', 'is', 'a', 'puzzle'];
-  } else {
     List<String> words = ConfigManager.getWords();
     
     int dim = ConfigManager.getDimensions();
@@ -136,7 +113,6 @@ List<String> getWords() {
     }
 
     return words;
-  }
 }
 
 bool validateWord(String word, int dim) {
