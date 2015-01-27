@@ -3,7 +3,7 @@ import 'grid.dart';
 import 'config_manager.dart' as ConfigManager;
 import 'dart:js';
 
-const int BUTTON_SIZE = 25;
+const int BUTTON_SIZE = 50;
 
 const int MIN_DIM = 5;
 const int MAX_DIM = 20;
@@ -12,7 +12,7 @@ void main() {
   int width = getDimensions() * BUTTON_SIZE;
   width += 600;
   querySelector('#content-inner')..style.width = width.toString() + "px";
-  
+
   initListeners();
 }
 
@@ -24,7 +24,7 @@ void initListeners() {
 void toggleVisibility(String element, [bool block = true]) {
   var el = querySelector(element);
   String display = el.style.display;
-  
+
   if (display == "none") {
     if (block) {
       display = "block";
@@ -34,7 +34,7 @@ void toggleVisibility(String element, [bool block = true]) {
   } else {
     display = "none";
   }
-  
+
   el.style.display = display;
 }
 
@@ -62,7 +62,17 @@ void setLanguage() {
 void generate() {
   try {
     querySelector('#download-image').style.visibility = 'hidden';
-    int dim = getDimensions();    
+    int dim = getDimensions();
+    int width = getDimensions() * BUTTON_SIZE;
+    var contentWordsearch = querySelector('#content-wordsearch');
+    contentWordsearch.style.width = width.toString() + "px";
+    contentWordsearch.style.height = width.toString() + "px";
+    var wordsearch = querySelector('#wordsearch');
+    wordsearch.style.width = width.toString() + "px";
+    wordsearch.style.height = width.toString() + "px";
+    width += 600;
+    querySelector('#content-inner')..style.width = width.toString() + "px";
+
     List<String> words = getWords();
     Grid grid = createGrid(dim, words);
     setLanguage();
@@ -108,10 +118,10 @@ int getDimensions() {
 
 List<String> getWords() {
     List<String> words = ConfigManager.getWords();
-    
+
     int dim = ConfigManager.getDimensions();
     words.retainWhere((w) => validateWord(w, dim));
-        
+
     if (words.length < 1) {
       throw new Exception("You must have at least one word");
     }
@@ -124,14 +134,14 @@ bool validateWord(String word, int dim) {
     return false;
   }
   if (word.length > dim) {
-    String errorMessage = "The word " + word + " is " + word.length.toString() 
+    String errorMessage = "The word " + word + " is " + word.length.toString()
         + " letters long, but the largest word that can fit on the grid is only "
         + dim.toString() + " letters long";
     throw new Exception(errorMessage);
   }
-  
+
   // TODO Word should only contain chars from charset
-  
+
   return true;
 }
 

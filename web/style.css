@@ -21,18 +21,21 @@ body {
   margin: 0 auto;
 }
 
+#content-wordsearch {
+  height: 500px;
+  width: 500px;
+}
+
 .left {
   float: left;
-  height: 250px;
-  width: 250px;
   margin: 0 auto;
 }
 
 #wordsearch {
   background: white;
   border: solid 1px;
-  height: 250px;
-  width: 250px;
+  height: 500px;
+  width: 500px;
   margin: 0 auto;
 }
 
@@ -47,10 +50,11 @@ body {
 }
 
 .letter {
-  height: 25px;
-  width: 25px;
+  height: 50px;
+  width: 50px;
   background: white;
   border: 0px;
+  font-size: 20px;
 }
 
 .punjabi * {
