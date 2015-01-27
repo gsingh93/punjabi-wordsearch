@@ -11,13 +11,13 @@
       <h1>Punjabi Wordsearch</h1>
       <div id="content-inner">
       <p>Generate wordsearch puzzles in both english and punjabi. This application is open source, and the code can be found <a href="https://github.com/gsingh93/punjabi-wordsearch">here</a>. Please report any issues you have <a href="https://github.com/gsingh93/punjabi-wordsearch/issues">on Github</a> (preferred) or by <a href="mailto:gsingh2011@gmail.com">email</a>.
-        <div class="left">
+        <div class="left" id="content-wordsearch">
           <div id="wordsearch">
           </div>
           <ol id="words">
           </ol>
         </div>
-  
+
         <div id="form">
           Language:<br>
           <select id="language" name="language">
@@ -36,29 +36,32 @@
           <input type="checkbox" name="directions" value="se" checked="checked">South East<br>
           <input type="checkbox" name="directions" value="sw" checked="checked">South West<br>
           <br>
-          
+
           Enter the words to use:<br>
           <div id="input-words">Words (one per line):<br><textarea name="input-words" rows="4" cols="50"></textarea></div>
           <br><br>
           The number of rows and columns to make the grid:<br>
           <input type="number" name="dimensions" min="5" max="20" value="10">
           <br><br>
-          <button id="generate">Generate</button>
+          <button id="generate">Generate</button> <a id="download-image" style="visibility: hidden"><button>Download wordsearch</button></a>
         </div>
         <div style="clear:both"></div>
       </div>
     </div>
-    
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
-<!--    <script type="text/javascript" src="jspdf/jspdf.js"></script>
-    <script type="text/javascript" src="jspdf/libs/FileSaver.js/FileSaver.js"></script>
-    <script type="text/javascript" src="jspdf/libs/BlobBuilder.js/BlobBuilder.js"></script>
-  
-    <script type="text/javascript" src="jspdf/jspdf.plugin.addimage.js"></script>
-  
-    <script type="text/javascript" src="jspdf/jspdf.plugin.standard_fonts_metrics.js"></script>
-    <script type="text/javascript" src="jspdf/jspdf.plugin.split_text_to_size.js"></script>
-    <script type="text/javascript" src="jspdf/jspdf.plugin.from_html.js"></script>-->
+    <script type="text/javascript" src="html2canvas.js"></script>
+    <script>
+        function createImage() {
+            html2canvas(document.getElementById('content-wordsearch'), {
+                onrendered: function(canvas) {
+                    var imgData = canvas.toDataURL('image/png');
+                    var download = document.getElementById('download-image');
+                    download.href = imgData;
+                    download.download = "download.png";
+                }
+            });
+        }
+    </script>
     <script type="application/dart" src="punjabi_wordsearch.dart"></script>
     <script src="packages/browser/dart.js"></script>
   </body>

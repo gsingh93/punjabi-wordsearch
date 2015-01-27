@@ -29,6 +29,7 @@ body {
 }
 
 #wordsearch {
+  background: white;
   border: solid 1px;
   height: 250px;
   width: 250px;

@@ -1,6 +1,7 @@
 import 'dart:html';
 import 'grid.dart';
 import 'config_manager.dart' as ConfigManager;
+import 'dart:js';
 
 const int BUTTON_SIZE = 25;
 
@@ -13,8 +14,6 @@ void main() {
   querySelector('#content-inner')..style.width = width.toString() + "px";
   
   initListeners();
-    
-  generatePDF();
 }
 
 void initListeners() {
@@ -60,12 +59,15 @@ void setLanguage() {
 
 void generate() {
   try {
+    querySelector('#download-image').style.visibility = 'hidden';
     int dim = getDimensions();    
     List<String> words = getWords();
     Grid grid = createGrid(dim, words);
     setLanguage();
     grid.display();
     displayWords(words);
+    generateImage();
+    querySelector('#download-image').style.visibility = 'visible';
   } catch(e, stackTrace) {
     String errorMessage = "An error occurred: " + e.toString();
     print(errorMessage);
@@ -131,12 +133,6 @@ bool validateWord(String word, int dim) {
   return true;
 }
 
-void generatePDF() {
-  //var doc = new js.Proxy(js.context.jsPDF);
-//    doc.text(20, 20, "hello world");
-//    doc.save('test.pdf');
-    //doc.fromHTML(js.context.document.getElementById('content'), 15, 15, {
-   //   'width': 170
-    //});
-  //});
+void generateImage() {
+  context.callMethod('createImage');
 }
