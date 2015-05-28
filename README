@@ -1,3 +1,0 @@
-A wordsearch Dart application that generates wordsearches in both English and Punjabi.
-
-To add another language, simply create a class that extends WordPlacer, implement the required methods (should be straight forward after looking at the examples), and modify the switch statement in the WordPlacer factory constructor.
